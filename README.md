@@ -12,7 +12,7 @@ Les données choisies se focalisent sur le nombre d'incendie et la superficie fo
 
 Les données sont disponibles en format .CSV. Sept fichiers sont téléchargables sur la page, selon les données dont on a besoin : Par exemple, si ce sont plutôt les mois pendant lesquels les incendies se sont produits qui nous intéressent ou seulement la surface touchée. 
 
-Les données sont organisées sous forme de tableau à deux dimensions, la juridiction (région du Canada) et les années de 1990 à 2021.
+Les données sont organisées sous forme de tableau à deux dimensions, les juridictions par ordre alphabétique (régions du Canada) et les années de 1990 à 2021.
 
 ### But
 
