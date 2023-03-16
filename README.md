@@ -22,3 +22,10 @@ Les données choisies pour notre projet sont données par la Base de données na
 La carte signalant les périmètres des feux de forêts de 1980-2020 permet de mettre en avant les zones les plus sensibles aux feux de forêts. Cela peut notamment permettre aux autorités canadiennes d’augmenter leurs vigilances dans ces zones.
 La visualisation de ces données permet d’évaluer le lien entre superficies brûlées et le nombre de feu sur la même année, mais également les différences de ces données entre chaque année.
 
+## Wireframes
+
+![Accueil](https://user-images.githubusercontent.com/43564517/225589913-b2cabf34-31a5-4f42-b8d2-30af3dc830d7.png)
+![Graph 1](https://user-images.githubusercontent.com/43564517/225589953-0bfd4b97-c8cd-4cd8-b139-57eebb54e2b9.png)
+![Graph 2](https://user-images.githubusercontent.com/43564517/225589973-434db84f-a220-42a8-bd56-7f0a60fec2a0.png)
+![Graph 3](https://user-images.githubusercontent.com/43564517/225589985-86b78b64-7779-4a33-ad5c-13bfc214cafa.png)
+
