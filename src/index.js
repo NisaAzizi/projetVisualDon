@@ -42,8 +42,8 @@ const stackGroup = svg.append("g")
 let bars = stackGroup.selectAll("rect")
     .data(d => d.filter(item => item.data.Annee === graphe1[0].Annee))
     .join("rect")
-    .attr("y", d => yScale(d.data.Annee))
-    .attr("x", d => xScale(d[0]))
+    .attr("y", height/2)
+    .attr("x", d => xScale(d.Annee))
     .attr("width", d => xScale(d[1]) - xScale(d[0]))
     .attr("height", yScale.bandwidth());
 
@@ -62,7 +62,7 @@ d3.select("body")
             .data(d => d.filter(item => item.data.Annee === nextData.Annee))
             .join(
                 enter => enter.append("rect")
-                    .attr("y", d => yScale(d.data.Annee))
+                    .attr("y",  height/2)
                     .attr("height", yScale.bandwidth())
                     .attr("fill", d => colorScale(d.key))
                     .attr("x", d => xScale(d[0]))
@@ -71,7 +71,7 @@ d3.select("body")
                         .duration(500)
                         .attr("width", d => xScale(d[1]) - xScale(d[0]))),
                 update => update
-                    .attr("y", d => yScale(d.data.Annee))
+                    .attr("y", height/2)
                     .attr("x", d => xScale(d[0]))
                     .attr("width", d => xScale(d[1]) - xScale(d[0]))
                     .call(update => update.transition()
