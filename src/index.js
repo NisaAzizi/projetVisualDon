@@ -47,6 +47,13 @@ let bars = stackGroup.selectAll("rect")
     .attr("width", d => xScale(d[1]) - xScale(d[0]))
     .attr("height", yScale.bandwidth());
 
+const currentYearText = svg.append("text")
+    .attr("x", 40)
+    .attr("y", 300)
+    .attr("text-anchor", "end")
+    .attr("font-size", "16px")
+    .attr("font-weight", "bold")
+    .text(`${graphe1[0].Annee}`);
 
 d3.select("body")
     .append("button")
@@ -58,6 +65,7 @@ d3.select("body")
             currentIndex = -1;
         }
         let nextData = graphe1[currentIndex + 1];
+        currentYearText.text(`${nextData.Annee}`);
         bars = stackGroup.selectAll("rect")
             .data(d => d.filter(item => item.data.Annee === nextData.Annee))
             .join(
