@@ -2,71 +2,96 @@ import * as d3 from "d3";
 
 import graphe1 from "../data/graph1_FoudreVsHuman.json"
 
-console.log(graphe1)
-//Graph2
-// Définir les dimensions du graphique
-const width = 600;
+// Dimensions du graphique
+const width = 800;
 const height = 400;
-const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-const innerWidth = width - margin.left - margin.right;
-const innerHeight = height - margin.top - margin.bottom;
 
-// Créer l'élément SVG et l'ajouter au DOM
-const svg = d3
-    .select("body")
+// Ajout du conteneur SVG
+const svg = d3.select("body")
     .append("svg")
     .attr("width", width)
     .attr("height", height);
 
-// Créer un groupe pour les éléments du graphique
-const g = svg
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Définir les échelles pour les axes X et Y
-const x = d3.scaleBand().range([0, innerWidth]).padding(0.1);
-const y = d3.scaleLinear().range([innerHeight, 0]);
+// Extraction des clés des données (à l'exception de la clé "Annee")
+const keys = Object.keys(graphe1[0]).filter(key => key !== "Annee");
 
-// Créer les axes X et Y
-const xAxis = d3.axisBottom(x);
-const yAxis = d3.axisLeft(y).ticks(5);
+// Échelle X pour les années
+const yScale = d3.scaleBand()
+    .domain(graphe1.map(d => d.Annee))
+    .range([0, height])
+    .paddingInner(0.1);
 
-// Définir les couleurs des différentes séries de données
-const color = d3.scaleOrdinal(d3.schemeCategory10);
+const xScale = d3.scaleLinear()
+    .domain([0, d3.max(graphe1, d => d3.sum(keys, key => d[key]))])
+    .range([0, width]);
 
-// Charger les données à partir du JSON
-d3.json(graphe1).then(function (data) {
-    // Convertir les données en un format adapté pour la méthode d3.stack()
-    const series = d3.stack().keys(["Total Foudre", "Total Humain"])(data);
+// Échelle de couleur pour les données
+const colorScale = d3.scaleOrdinal()
+    .domain(keys)
+    .range(d3.schemeCategory10);
 
-    // Définir les domaines des échelles en fonction des données
-    x.domain(data.map((d) => d.Annee));
-    y.domain([0, d3.max(series, (d) => d3.max(d, (d) => d[1]))]);
+// Création du groupe pour l'histogramme empilé
+const stackGroup = svg.append("g")
+    .selectAll("g")
+    .data(d3.stack().keys(keys)(graphe1))
+    .join("g")
+    .attr("fill", d => colorScale(d.key));
 
-    // Dessiner les éléments du graphique
-    g.append("g")
-        .attr("class", "axis axis-x")
-        .attr("transform", `translate(0,${innerHeight})`)
-        .call(xAxis);
 
-    g.append("g").attr("class", "axis axis-y").call(yAxis);
+let bars = stackGroup.selectAll("rect")
+    .data(d => d.filter(item => item.data.Annee === graphe1[0].Annee))
+    .join("rect")
+    .attr("y", d => yScale(d.data.Annee))
+    .attr("x", d => xScale(d[0]))
+    .attr("width", d => xScale(d[1]) - xScale(d[0]))
+    .attr("height", yScale.bandwidth());
 
-    const serie = g
-        .selectAll(".serie")
-        .data(series)
-        .enter()
-        .append("g")
-        .attr("class", "serie")
-        .attr("fill", (d) => color(d.key));
 
-    serie
-        .selectAll("rect")
-        .data((d) => d)
-        .enter()
-        .append("rect")
-        .attr("x", (d) => x(d.data.Année))
-        .attr("y", (d) => y(d[1]))
-        .attr("height", (d) => y(d[0]) - y(d[1]))
-        .attr("width", x.bandwidth());
+d3.select("body")
+    .append("button")
+    .text("Suivant")
+    .on("click", () => {
+        let currentYear = parseInt(bars.data()[0].data.Annee);
+        let currentIndex = graphe1.findIndex(d => d.Annee === currentYear);
+        if (currentIndex === graphe1.length - 1) {
+            currentIndex = -1;
+        }
+        let nextData = graphe1[currentIndex + 1];
+        bars = stackGroup.selectAll("rect")
+            .data(d => d.filter(item => item.data.Annee === nextData.Annee))
+            .join(
+                enter => enter.append("rect")
+                    .attr("y", d => yScale(d.data.Annee))
+                    .attr("height", yScale.bandwidth())
+                    .attr("fill", d => colorScale(d.key))
+                    .attr("x", d => xScale(d[0]))
+                    .attr("width", 0)
+                    .call(enter => enter.transition()
+                        .duration(500)
+                        .attr("width", d => xScale(d[1]) - xScale(d[0]))),
+                update => update
+                    .attr("y", d => yScale(d.data.Annee))
+                    .attr("x", d => xScale(d[0]))
+                    .attr("width", d => xScale(d[1]) - xScale(d[0]))
+                    .call(update => update.transition()
+                        .duration(500)
+                        .attr("width", d => xScale(d[1]) - xScale(d[0]))),
+                exit => exit
+                    .call(exit => exit.transition()
+                        .duration(500)
+                        .attr("width", 0)
+                        .remove())
+            )});
 
-});
+
+const xAxis = d3.axisBottom(xScale);
+svg.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(xAxis);
+
+const yAxis = d3.axisLeft(yScale);
+svg.append("g")
+    .call(yAxis);
+
+
