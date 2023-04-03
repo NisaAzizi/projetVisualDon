@@ -39,13 +39,38 @@ const stackGroup = svg.append("g")
     .attr("fill", d => colorScale(d.key));
 
 
-let bars = stackGroup.selectAll("rect")
+let bars = stackGroup.selectAll("g")
     .data(d => d.filter(item => item.data.Annee === graphe1[0].Annee))
-    .join("rect")
+    .join("g")
+    .attr("class", "bar-group");
+
+bars.append("rect")
     .attr("y", height/2)
     .attr("x", d => xScale(d.Annee))
     .attr("width", d => xScale(d[1]) - xScale(d[0]))
-    .attr("height", yScale.bandwidth());
+    .attr("height", yScale.bandwidth())
+    .attr("class", "bar")
+    .on("mouseover", function (event, d) {
+        tooltip.style("opacity", 1)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY + 10) + "px")
+            .html(`<div>
+                        <span style="display:inline-block;width:10px;height:10px;background-color:steelblue;margin-right:5px;"></span>
+                        Total Foudre: ${d.data["Total Foudre"]}
+                    </div>
+                    <div>
+                        <span style="display:inline-block;width:10px;height:10px;background-color:darkorange;margin-right:5px;"></span>
+                        Total Humain: ${d.data["Total Humain"]}
+                    </div>`);
+    })
+    .on("mouseout", function (event, d) {
+        tooltip.style("opacity", 0);
+    });
+
+
+const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip");
+
 
 const currentYearText = svg.append("text")
     .attr("x", 40)
@@ -55,6 +80,8 @@ const currentYearText = svg.append("text")
     .attr("font-weight", "bold")
     .text(`${graphe1[0].Annee}`);
 
+
+//https://codepen.io/romanoe/pen/rNZKjvB Pour automatiser l'avancement des dates
 d3.select("body")
     .append("button")
     .text("Suivant")
@@ -92,7 +119,7 @@ d3.select("body")
                         .remove())
             )});
 
-
+//Supprimer les axes
 const xAxis = d3.axisBottom(xScale);
 svg.append("g")
     .attr("transform", `translate(0, ${height})`)
