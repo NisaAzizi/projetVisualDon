@@ -1,6 +1,12 @@
 import * as d3 from "d3";
 
 import graphe1 from "../data/graph1_FoudreVsHuman.json"
+import graph3Incendie from "../data/graph3_Nombres_incendies_par_provinces_et_années.json"
+import graph3Superficie from "../data/graph3_Superficie_provinces.json"
+import graph3Dommages from "../data/graph3_Valeur_dommages_par_pronvince_et_années.json"
+
+
+/*################################### ---> GRAPH1 <--- ################################### */
 
 // Dimensions du graphique
 const width = 800;
@@ -128,5 +134,45 @@ svg.append("g")
 const yAxis = d3.axisLeft(yScale);
 svg.append("g")
     .call(yAxis);
+
+
+/*################################### ---> GRAPH 3 <--- ################################### */
+
+const annees = Object.keys(graph3Dommages[0])
+
+let nbrIncendies = [],
+    valDommages = [],
+    superficieProvinces = [],
+
+    donnesCombinee = [];
+
+const mergeByProvince = (a1, a2, a3) => {
+  let data = [];
+  a1.map(itm => {
+    let newObject = {
+      "Juridiction": itm.Juridiction,
+      "incendies": a3.find((item) => item.Juridiction === itm.Juridiction).nombre,
+      "coût des dommages": a2.find((item) => item.Juridiction === itm.Juridiction).valeur,
+      "superficie": itm.superficie
+    };
+    data.push(newObject);
+  });
+  return data;
+};
+
+annees.forEach(annee => {
+  valDommages.push({"annee":annee, "data" : graph3Dommages})
+  superficieProvinces.push({"annee":annee, "data" :graph3Superficie})
+  nbrIncendies.push({"annee":annee, "data" : graph3Incendie})
+
+  const valDommagesAnnee = valDommages.filter(d => d.annee == annee).map(d => d.data)[0];
+  const superficieProvincesAnnee = superficieProvinces.filter(d => d.annee == annee).map(d => d.data)[0];
+  const nbreIncendieAnnee = nbrIncendies.filter(d => d.annee == annee).map(d => d.data)[0];
+
+  donnesCombinee.push({"annee": annee, "data": mergeByProvince(valDommagesAnnee, superficieProvincesAnnee, nbreIncendieAnnee)})
+});
+
+console.log(donnesCombinee);
+//ICI OK
 
 
