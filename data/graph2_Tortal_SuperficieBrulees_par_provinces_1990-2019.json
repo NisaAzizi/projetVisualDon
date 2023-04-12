@@ -1,72 +1,72 @@
 [
  {
    "Juridiction": "Alberta",
-   "km2": 80827.82,
+   "km": 80827.82,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 195.78
  },
  {
    "Juridiction": "Colombie-Britannique",
-   "km2": 51747.92,
+   "km": 51747.92,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 125.34
  },
  {
    "Juridiction": "Île-du-Prince-Édouard",
-   "km2": 11.57,
+   "km": 11.57,
    "pourcentage_canton_GE": 4.1
  },
  {
    "Juridiction": "Manitoba",
-   "km2": 80413.00,
+   "km": 80413.00,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 194.78
  },
  {
    "Juridiction": "Nouveau-Brunswick",
-   "km2": 291.18,
+   "km": 291.18,
    "pourcentage_canton_GE": 103.07,
    "pourcentage_CH": null
  },
  {
    "Juridiction": "Nouvelle-Ecosse",
-   "km2": 221.58,
+   "km": 221.58,
    "pourcentage_canton_GE": 78.44,
    "pourcentage_CH": null
  },
  {
    "Juridiction": "Ontario",
-   "km2": 48678.43,
+   "km": 48678.43,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 117.91
  },
  {
    "Juridiction": "Québec",
-   "km2": 81763.18,
+   "km": 81763.18,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 198.05
  },
  {
    "Juridiction": "Saskatchewan",
-   "km2": 149702.40,
+   "km": 149702.40,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 362.61
  },
  {
    "Juridiction": "Terre-Neuve-et-Labrador",
-   "km2": 6759.65,
+   "km": 6759.65,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 16.37
  },
  {
    "Juridiction": "Territoires du Nord-Ouest",
-   "km2": 187302.88,
+   "km": 187302.88,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 453.68
  },
  {
    "Juridiction": "Yukon",
-   "km2": 55496.69,
+   "km": 55496.69,
    "pourcentage_canton_GE": null,
    "pourcentage_CH": 134.42
  }

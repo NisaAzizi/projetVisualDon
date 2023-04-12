@@ -1,50 +1,50 @@
 [
  {
    "Juridiction": "Alberta",
-   "Superficie-km2": 661848
+   "km": 661848
  },
  {
    "Juridiction": "Colombie-Britannique",
-   "Superficie-km2": 994735
+   "km": 994735
  },
  {
    "Juridiction": "Île-du-Prince-Édouard",
-   "Superficie-km2": 5660
+   "km": 5660
  },
  {
    "Juridiction": "Manitoba",
-   "Superficie-km2": 647801
+   "km": 647801
  },
  {
    "Juridiction": "Nouveau-Brunswick",
-   "Superficie-km2": 72908
+   "km": 72908
  },
  {
    "Juridiction": "Nouvelle-Ecosse",
-   "Superficie-km2": 55284
+   "km": 55284
  },
  {
    "Juridiction": "Ontario",
-   "Superficie-km2": 1076395
+   "km": 1076395
  },
  {
    "Juridiction": "Québec",
-   "Superficie-km2": 1542056
+   "km": 1542056
  },
  {
    "Juridiction": "Saskatchewan",
-   "Superficie-km2": 651036
+   "km": 651036
  },
  {
    "Juridiction": "Terre-Neuve-et-Labrador",
-   "Superficie-km2": 405212
+   "km": 405212
  },
  {
    "Juridiction": "Territoires du Nord-Ouest",
-   "Superficie-km2": 1346106
+   "km": 1346106
  },
  {
    "Juridiction": "Yukon",
-   "Superficie-km2": 482443
+   "km": 482443
  }
 ]
