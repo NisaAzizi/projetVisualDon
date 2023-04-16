@@ -1,7 +1,57 @@
+h1{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 50px;
+    text-align: center;
+    margin-top:250px;
+    margin-bottom: 250px;
+}
+
+h2{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 
 .tooltip {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
+    display: flex;
     padding: 5px;
+    font-family: 'Open Sans', sans-serif;
+    justify-content: center;
 }
+
+.bar {
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.next-button {
+    background-color: white;
+    border: 1px gray solid;
+    font-size: 30px;
+    border-radius: 8px;
+    font-family: 'Open Sans', sans-serif;
+    padding-inline: 25px;
+    display: block;
+    margin: 0 auto;
+}
+
+svg {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.legende1, .legende2{
+    font-size: 20px;
+    padding-inline: 15px;
+}
+
+
+
