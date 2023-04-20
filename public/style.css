@@ -77,6 +77,11 @@ svg {
   svg {
     position: relative;
   }
+
+  html {
+    cursor: url('../img/fire-torch.png'), auto;
+  }
+  
   
   
   
