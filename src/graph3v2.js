@@ -1,3 +1,22 @@
+import * as d3 from "d3";
+import { select, selectAll } from "d3-selection";
+import { scaleSqrt, scaleLinear, scalePow } from "d3-scale";
+import { max, min } from "d3-array";
+import { axisLeft, axisBottom } from "d3-axis";
+import { geoMercator, geoPath } from "d3-geo";
+import { json } from "d3-fetch";
+import { transition } from "d3-transition";
+import { easeLinear } from "d3-ease";
+
+import graph3Incendie from "../data/graph3_Nombres_incendies_par_provinces_et_années.json";
+import graph3Superficie from "../data/graph3_Superficie_provinces.json";
+import graph3Dommages from "../data/graph3_Valeur_dommages_par_pronvince_et_années.json";
+
+// Dimensions du graphique
+const width = 800;
+const height = 300;
+
+
 const annees = Object.keys(graph3Dommages[0]);
 
 let nbrIncendies = [],
