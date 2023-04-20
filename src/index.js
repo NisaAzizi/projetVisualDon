@@ -156,6 +156,8 @@ svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
 const yAxis = d3.axisLeft(yScale);
 svg.append("g").call(yAxis);*/
 
+/*test*/
+
 /*################################### ---> GRAPH 3 <--- ################################### */
 
 const annees = Object.keys(graph3Dommages[0]);
