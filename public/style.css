@@ -52,38 +52,80 @@ svg {
     padding-inline: 15px;
 }
 
-#tooltip {
-    
-    width: 120px;
-    text-align: center;
+.etiquette { position: absolute;
+    padding: 10px; 
     background-color: white;
-    color: black;
-    border: 1px solid black;
+    border: 1px solid ; 
     border-radius: 5px;
-    padding: 10px;
-    font-size: 12px;
-    position: absolute;
-    z-index: 1;
-  }
-  
-  path:hover {
-    opacity: 0.7;
-  }
-  
-  path:hover + #tooltip {
-    visibility: visible;
-  }
+    font-size: 14px;
+}
+    
+    
+.bubbles:hover {
+    stroke: black;
+}
 
-  svg {
-    position: relative;
+* { box-sizing: border-box; }
+body {
+
+  font-family: Avenir, Calibri, sans-serif;
+}
+#canada-map { 
+  fill: hsl(36, 0%, 70%);
+}
+#canada-map g {
+  transition: .3s;
+}
+#canada-map g:hover { 
+  fill: hsl(36, 100%, 70%);
+  cursor: pointer;
+}
+.active, .active:hover { 
+  fill: hsl(36, 100%, 70%) !important;
+}		
+#provinceInfo { 
+  position: absolute;
+  top: 0; right: 0;
+  width: 25%;
+  background: rgba(0,0,0,0.2);
+  pointer-events: none;
+  opacity: 0;
+  transition: 1s; 
+}
+@media all and (max-width: 800px) {
+  #provinceInfo { width: 40%; }
+}
+@media all and (max-width: 750px) {
+  #provinceInfo { 
+    width: 100%; 
+    position: static; 
+    background: none;
   }
-
-  html {
-    cursor: url('../img/fire-torch.png'), auto;
+#provinceInfo.show p { 
+  color: #000 !important; 
+  margin-bottom: 2rem; 
   }
-  
-  
-  
-  
+}
+#provinceInfo.show { opacity: 1; }
+#provinceInfo h1 {
+  background: hsl(36, 100%, 70%);
+  padding: .3rem;
+  padding-left: 1rem;
+  margin-top: -.5rem;
+  font-weight: 400;
+  height: auto;
+  margin-bottom: auto;
+}
+#provinceInfo p {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+#provinceInfo img {
+  margin-bottom: 1rem;
+  width: 100%;
+}
 
-
+.descr{
+  height: 3px !important;
+  width: auto;
+}

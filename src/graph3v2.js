@@ -214,8 +214,8 @@ function updateChart(data_iteration) {
           .attr("r", (d) => superficieProvincesScale(d.Superficie))
           .attr("fill", (d) => couleurJuridiction(d.Juridiction))
           .style("opacity", 0.1)
-          .on("mouseover", showEtiquette)
-          .on("mouseleave", hideEtiquette )
+          //.on("mouseover", showEtiquette)
+          //.on("mouseleave", hideEtiquette )
          ,
       (update) =>
         update

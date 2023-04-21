@@ -14,7 +14,8 @@
  {
    "Juridiction": "Île-du-Prince-Édouard",
    "km": 11.57,
-   "pourcentage_canton_GE": 4.1
+   "pourcentage_canton_GE": 4.1,
+   "pourcentage_CH": null
  },
  {
    "Juridiction": "Manitoba",
