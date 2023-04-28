@@ -67,6 +67,40 @@ function createPieChart(year) {
       tooltip.transition().duration(200).style("opacity", 0);
     });
 
+// Ajout d'un événement de survol pour les données de foudre
+const foudrePath = path.filter((d) => d.data === foudrePercent);
+foudrePath
+  .on("mouseover", function (event, d) {
+    const percent = Math.round(d.data * 10) / 10;
+    console.log(d);
+    console.log(percent);
+    tooltip
+      .html(`Foudre : ${percent}% de superficie brûlée total de l'année  ${year} au Canada, soit ${filteredData[0]["Total Foudre"]}km2`)
+      .transition()
+      .duration(200)
+      .style("opacity", 0.9);
+  })
+  .on("mouseout", function () {
+    tooltip.transition().duration(200).style("opacity", 0);
+  });
+
+// Ajout d'un événement de survol pour les données de humain
+const humainPath = path.filter((d) => d.data === humainPercent);
+humainPath
+  .on("mouseover", function (event, d) {
+    const percent = Math.round(d.data * 10) / 10;
+    console.log(d);
+    console.log(percent);
+    tooltip
+      .html(`Humain : ${percent}% de superficie brûlée total de l'année ${year} au Canada, soit ${filteredData[0]["Total Humain"]}km2`)
+      .transition()
+      .duration(200)
+      .style("opacity", 0.9);
+  })
+  .on("mouseout", function () {
+    tooltip.transition().duration(200).style("opacity", 0);
+  });
+
   // Ajout d'un titre
   g.append("text")
     .attr("text-anchor", "middle")

@@ -28,6 +28,9 @@ canadamap.addEventListener("click", function (e) {
                 referentiel="du Canton de Genève"
             }
             
+    } else{
+      dataDeJuridiction = 0;
+      referentiel="de la Suisse"
     }
 }
     
