@@ -16,6 +16,7 @@ h2{
 
 
 .tooltip {
+    position: absolute;
     display: flex;
     padding: 5px;
     font-family: 'Open Sans', sans-serif;
@@ -52,14 +53,7 @@ svg {
     padding-inline: 15px;
 }
 
-.etiquette { position: absolute;
-    padding: 10px; 
-    background-color: white;
-    border: 1px solid ; 
-    border-radius: 5px;
-    font-size: 14px;
-}
-    
+
     
 .bubbles:hover {
     stroke: black;

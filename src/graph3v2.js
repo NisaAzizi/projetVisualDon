@@ -79,7 +79,11 @@ const data2019 = donnesCombinee
 
 const margin = { top: 50, right: 40, bottom: 40, left: 40 };
 
-const figure = select("body")
+
+// Create container
+const container = select("body").append("div").attr("id", "animation")
+
+const figure = container
   .append("svg")
   .attr("id", "svg2")
   .attr("width", width + margin.left + margin.right)
@@ -164,8 +168,8 @@ function stop() {
   nIntervId = null;
 }
 
-
-let etiquette = d3.select("#svg2")
+// Avant le tooltip était dans le svg
+let etiquette = container
 .append("div")
   .style("opacity", 0)
   .attr("class", "tooltip")
@@ -175,15 +179,16 @@ let etiquette = d3.select("#svg2")
   .style("color", "white")
 
 let showEtiquette = function(event, d) {
-  console.log( d)
+  console.log(d)
   etiquette
     .transition()
     .duration(200)
+
   etiquette
     .style("opacity", 1)
     .html("Dommage: " + d.Dommage)
-    .style("left", (event.layerX+10+"px"))
-    .style("top", (event.layerY+10+"px"))
+    .style("left", (event.layerX+ 10+"px"))
+    .style("top", (event.layerY +10+"px"))
 }
 
 let hideEtiquette = function(d) {
@@ -214,8 +219,7 @@ function updateChart(data_iteration) {
           .attr("r", (d) => superficieProvincesScale(d.Superficie))
           .attr("fill", (d) => couleurJuridiction(d.Juridiction))
           .style("opacity", 0.1)
-          //.on("mouseover", showEtiquette)
-          //.on("mouseleave", hideEtiquette )
+
          ,
       (update) =>
         update
@@ -226,6 +230,8 @@ function updateChart(data_iteration) {
   
       (exit) => exit.remove(),
     )
+      .on("mouseover", showEtiquette)
+     .on("mouseleave", hideEtiquette )
 
 
     
