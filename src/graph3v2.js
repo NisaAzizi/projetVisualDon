@@ -186,7 +186,7 @@ let showEtiquette = function(event, d) {
 
   etiquette
     .style("opacity", 1)
-    .html("Dommage: " + d.Dommage)
+    .html(`Dommage: ` + d.Dommage + `<br> nombre d'incendies:` + d.Incendie + `<br>` + d.Juridiction+' ' + d.Incendie)
     .style("left", (event.layerX+ 10+"px"))
     .style("top", (event.layerY +10+"px"))
 }
