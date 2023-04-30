@@ -8,6 +8,8 @@ import { json } from "d3-fetch";
 import { transition } from "d3-transition";
 import { easeLinear } from "d3-ease";
 
+
+
 import graph3Incendie from "../data/graph3_Nombres_incendies_par_provinces_et_années.json";
 import graph3Superficie from "../data/graph3_Superficie_provinces.json";
 import graph3Dommages from "../data/graph3_Valeur_dommages_par_pronvince_et_années.json";
@@ -240,3 +242,4 @@ function updateChart(data_iteration) {
 
 document.getElementById("play").addEventListener("click", animate);
 document.getElementById("stop").addEventListener("click", stop);
+

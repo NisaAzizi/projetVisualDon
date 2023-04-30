@@ -86,6 +86,8 @@ body {
   opacity: 0;
   transition: 1s; 
 }
+
+
 @media all and (max-width: 800px) {
   #provinceInfo { width: 40%; }
 }
@@ -117,6 +119,11 @@ body {
 #provinceInfo img {
   margin-bottom: 1rem;
   width: 100%;
+}
+
+#provinceInfo #swiss{
+display: block;
+margin: auto;
 }
 
 .descr{

@@ -137,3 +137,5 @@ d3.select("body")
     d3.select("svg").remove(); // Suppression du cercle de répartition précédent
     d3.select(".tooltip").remove();
   });
+
+  
