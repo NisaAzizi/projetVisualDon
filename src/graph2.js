@@ -1,8 +1,9 @@
 import DataGraph2 from "../data/graph2_Tortal_SuperficieBrulees_par_provinces_1990-2019.json";
 import * as d3 from "d3";
 
-const width = 1500;
-const height = 300;
+const margin = { top: 10, right: 20, bottom: 30, left: 20 },
+  width = 300 - margin.left - margin.right,
+  height = 300 - margin.top - margin.bottom;
 
 let canadamap = document.getElementById("canada-map"),
   provinceInfo = document.getElementById("provinceInfo"),
@@ -18,6 +19,8 @@ canadamap.addEventListener("click", function (e) {
     province.classList.add("active");
     let provinceName = province.querySelector("title").innerHTML;
     let sourceImg, imgPath;
+    (sourceImg = province.querySelector("img")), (imgPath = "");
+
 
     for (const pourcentage of DataGraph2) {
       if (pourcentage.Juridiction == provinceName) {
@@ -27,33 +30,28 @@ canadamap.addEventListener("click", function (e) {
 
           //Calcul du nombre de points à colorier
           let nbrePointsAColorier, pourcentageEnDessousDe100;
-          console.log(dataDeJuridiction >= 101 && dataDeJuridiction <= 200)
-          //Switch case si dataDeJuridiction est entre 1 et 100, 101 et 200, 201 et 300, etc.
-          switch (true) {
-            case (dataDeJuridiction >= 1 && dataDeJuridiction <= 100): //affiche 1x la swiss
+          //FAIRE ELSIF
+
+          if (dataDeJuridiction >= 1 && dataDeJuridiction <= 100) {
+            //affiche 1x la swiss
             nbrePointsAColorier = Math.round((1943 * dataDeJuridiction) / 100);
-              colorPoints(nbrePointsAColorier);
-              break;
+            insertHtml(dataDeJuridiction, referentiel,provinceName, imgPath, sourceImg);
+            colorPoints(nbrePointsAColorier);
 
-            case (dataDeJuridiction >= 101 && dataDeJuridiction <= 200): //affiche 2x la swiss
-              pourcentageEnDessousDe100 = dataDeJuridiction - 100;
-              nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
-              //+afficher 1 la suisse en entier
-              //ajouter un nouvel svg dans le div id=addSvgSwiss
-              d3.select('#addSvgSwiss')
-              .append('svg')
-              .attr('id', 'swiss2')
-              .attr("width", 500)
-              .attr("height", 500);
-              colorPoints(nbrePointsAColorier);
-              break;
+          } else if (dataDeJuridiction >= 101 && dataDeJuridiction <= 200) {
+            //affiche 2x la swiss
+            pourcentageEnDessousDe100 = dataDeJuridiction - 100;
+            nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
+            insertHtml(dataDeJuridiction, referentiel,provinceName, imgPath, sourceImg);
+            colorPoints(1947);
 
-            case (dataDeJuridiction >= 201 && dataDeJuridiction <= 300): //affiche 3x la swiss
-              pourcentageEnDessousDe100 = dataDeJuridiction - 200;
-              nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
-              //+afficher 2x la suisse en entier
-              colorPoints(nbrePointsAColorier);
-              break;
+          } else if (dataDeJuridiction >= 201 && dataDeJuridiction <= 300) {
+            //affiche 3x la swiss
+            pourcentageEnDessousDe100 = dataDeJuridiction - 200;
+            nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
+            //+afficher 2x la suisse en entier
+            insertHtml(dataDeJuridiction, referentiel,provinceName, imgPath, sourceImg);
+            colorPoints(nbrePointsAColorier);
           }
         } else {
           dataDeJuridiction = pourcentage.pourcentage_canton_GE;
@@ -65,35 +63,29 @@ canadamap.addEventListener("click", function (e) {
       }
     }
 
-    (sourceImg = province.querySelector("img")), (imgPath = "");
-    provinceInfo.innerHTML = "";
-    provinceInfo.insertAdjacentHTML(
-      "afterbegin",
-      "<div id='addSvgSwiss'><svg id='swiss'></svg></div><img src=" +
-        imgPath +
-        sourceImg.getAttribute("xlink:href") +
-        " alt='" +
-        sourceImg.getAttribute("alt") +
-        "'><h1>" +
-        provinceName +
-        `</h1><p> La superficie brûlée en juridiction ${provinceName} entre 
-        1990 et 2019 représente <b> ${dataDeJuridiction} % <b> de la superficie ${referentiel} </p>`
-    );
+
     provinceInfo.classList.add("show");
   }
   console.log(dataDeJuridiction);
 });
 
 function colorPoints(numberOfPoints) {
+  console.log("here")
   d3.json("../data/switzerland_points.geojson").then(function (data) {
-    //let pt = countPoints(data);
-    //console.log(pt);
-    var features = data.features.slice(0, numberOfPoints);
-    var projection = d3.geoMercator().fitSize([width, height], data);
-    var colorScale = d3
-      .scaleSequential(d3.interpolateReds)
-      .domain([0, features.length]);
-    d3.select("#swiss")
+    let projection = d3.geoMercator().fitSize([width, height], data);
+    let features = data.features.slice(0, numberOfPoints);
+    
+// Ajouter le svg
+const monSvg = d3
+.select("#myDiv")
+.append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    monSvg
       .selectAll("circle")
       .data(features)
       .enter()
@@ -104,12 +96,31 @@ function colorPoints(numberOfPoints) {
       .attr("cy", function (d) {
         return projection(d.geometry.coordinates)[1];
       })
-      .attr("r", 5)
+      .attr("r", 1.5)
       .style("fill", function (d) {
         return d3.hsl(36, 1, 0.7);
       });
-    //.style("fill", function(d, i) { return colorScale(i); });
   });
+}
+
+
+
+function insertHtml (dataDeJuridiction, referentiel, provinceName, imgPath, sourceImg) {
+
+  provinceInfo.innerHTML = "";
+  provinceInfo.insertAdjacentHTML(
+    "afterbegin",
+    "<div id='myDiv'></div><img src=" +
+      imgPath +
+      sourceImg.getAttribute("xlink:href") +
+      " alt='" +
+      sourceImg.getAttribute("alt") +
+      "'><h1>" +
+      provinceName +
+      `</h1><p> La superficie brûlée en juridiction ${provinceName} entre 
+      1990 et 2019 représente <b> ${dataDeJuridiction} % <b> de la superficie ${referentiel} </p>`
+  );
+
 }
 
 //total de pts = 1943 = 100%
