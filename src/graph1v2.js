@@ -17,7 +17,9 @@ import data from "../data/graph1_FoudreVsHuman.json";
 let currentYear = 1990;
 
 // Fonction pour créer un cercle de répartition (camembert) pour une année donnée
-function createPieChart(year) {
+// Importation des données depuis un autre fichier JavaScript
+// Fonction pour créer une jauge de répartition pour une année donnée
+function createBarChart(year) {
   // Filtrage des données pour l'année spécifiée
   const filteredData = data.filter((d) => d.Annee === year);
 
@@ -27,38 +29,66 @@ function createPieChart(year) {
   const foudrePercent = (filteredData[0]["Total Foudre"] / total) * 100;
   const humainPercent = (filteredData[0]["Total Humain"] / total) * 100;
 
-  // Création du cercle de répartition (camembert)
+  // Définition des dimensions de la jauge
+  const width = 400;
+  const height = 200;
+
+  // Création du conteneur SVG pour la jauge
   const svg = d3
     .select("body")
     .append("svg")
-    .attr("width", 400)
-    .attr("height", 400);
-  const width = +svg.attr("width");
-  const height = +svg.attr("height");
-  const radius = Math.min(width, height) / 2;
-  const pie = d3.pie().sort(null);
-  const arc = d3
-    .arc()
-    .innerRadius(radius * 0.5)
-    .outerRadius(radius * 0.8);
-  const arcs = pie([foudrePercent, humainPercent]);
-  const color = d3.scaleOrdinal().range(["#ffe3b5", "#A4CFF3"]);
-  const g = svg
+    .attr("width", width)
+    .attr("height", height);
+
+  // Définition des couleurs
+  const colors = ["#ffe3b5", "#A4CFF3"];
+
+  // Définition de l'échelle pour l'axe x
+  const xScale = d3.scaleLinear().domain([0, total]).range([0, width]);
+
+  // Définition de l'axe x
+  const xAxis = d3
+    .axisBottom(xScale)
+    .tickSize(0)
+    .tickFormat((d) => "");
+
+  // Ajout de l'axe x
+  svg
     .append("g")
-    .attr("transform", `translate(${width / 2},${height / 2})`);
-  const path = g
-    .selectAll("path")
-    .data(arcs)
+    .attr("transform", `translate(0, ${height - 20})`)
+    .call(xAxis)
+    .selectAll("text")
+    .remove();
+
+  // Définition de l'échelle pour l'axe y
+  const yScale = d3
+    .scaleBand()
+    .domain(["Foudre", "Humain"])
+    .range([0, height - 20])
+    .paddingInner(0.1);
+
+  // Création des barres pour la jauge
+  const bars = svg
+    .selectAll(".bar")
+    .data([foudrePercent, humainPercent])
     .enter()
-    .append("path")
-    .attr("fill", (d) => color(d.data))
-    .attr("d", arc)
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", 0)
+    .attr("y", (d, i) => yScale(i))
+    .attr("width", (d) => xScale(d))
+    .attr("height", yScale.bandwidth())
+    .attr("fill", (d, i) => colors[i]);
+
+  // Ajout d'un événement de survol pour les données de foudre
+  bars
+    .filter((d, i) => i === 0)
     .on("mouseover", function (event, d) {
-      const percent = Math.round(d.data * 10) / 10;
-      console.log(d);
-      console.log(percent);
+      const percent = Math.round(d * 10) / 10;
       tooltip
-        .html(`${percent}%`)
+        .html(
+          "Foudre : ${percent}% de superficie brûlée total de l'année ${year} au Canada, soit ${filteredData[0][otal Foudre]}km2"
+        )
         .transition()
         .duration(200)
         .style("opacity", 0.9);
@@ -67,75 +97,54 @@ function createPieChart(year) {
       tooltip.transition().duration(200).style("opacity", 0);
     });
 
-// Ajout d'un événement de survol pour les données de foudre
-const foudrePath = path.filter((d) => d.data === foudrePercent);
-foudrePath
-  .on("mouseover", function (event, d) {
-    const percent = Math.round(d.data * 10) / 10;
-    console.log(d);
-    console.log(percent);
-    tooltip
-      .html(`Foudre : ${percent}% de superficie brûlée total de l'année  ${year} au Canada, soit ${filteredData[0]["Total Foudre"]}km2`)
-      .transition()
-      .duration(200)
-      .style("opacity", 0.9);
-  })
-  .on("mouseout", function () {
-    tooltip.transition().duration(200).style("opacity", 0);
-  });
+  // Ajout d'un événement de survol pour les données humaines
+  bars
+    .filter((d, i) => i === 1)
+    .on("mouseover", function (event, d) {
+      const percent = Math.round(d * 10) / 10;
+      tooltip
+        .html(
+          "Humain : ${percent}% de superficie brûlée total de l'année ${year} au Canada, soit ${filteredData[0][Total Humain]}km2"
+        )
+        .transition()
+        .duration(200)
+        .style("opacity", 0.9);
+    })
+    .on("mouseout", function () {
+      tooltip.transition().duration(200).style("opacity", 0);
+    });
 
-// Ajout d'un événement de survol pour les données de humain
-const humainPath = path.filter((d) => d.data === humainPercent);
-humainPath
-  .on("mouseover", function (event, d) {
-    const percent = Math.round(d.data * 10) / 10;
-    console.log(d);
-    console.log(percent);
-    tooltip
-      .html(`Humain : ${percent}% de superficie brûlée total de l'année ${year} au Canada, soit ${filteredData[0]["Total Humain"]}km2`)
-      .transition()
-      .duration(200)
-      .style("opacity", 0.9);
-  })
-  .on("mouseout", function () {
-    tooltip.transition().duration(200).style("opacity", 0);
-  });
+  // Ajout d'une légende pour la jauge
+  const legend = svg
+    .selectAll(".legend")
+    .data(["Foudre", "Humain"])
+    .enter()
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", (d, i) => translate(0, i * 20));
 
-  // Ajout d'un titre
-  g.append("text")
-    .attr("text-anchor", "middle")
-    .attr("font-size", "1.5em")
-    .attr("class", "texte-annee")
-    .text(`${year}`);
+  legend
+    .append("rect")
+    .attr("x", width - 100)
+    .attr("y", 5)
+    .attr("width", 15)
+    .attr("height", 15)
+    .attr("fill", (d, i) => colors[i]);
 
-  // Mise à jour de la variable "currentYear"
-  currentYear = year;
+  legend
+    .append("text")
+    .attr("x", width - 80)
+    .attr("y", 15)
+    .text((d) => d)
+    .style("font-size", "12px");
 
+  // Ajout d'une infobulle pour afficher les détails des données survolées
   const tooltip = d3
     .select("body")
     .append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
-
-  // Ajout des événements de survol pour afficher le tooltip avec les pourcentages
 }
 
-// Appel initial de la fonction "createPieChart" avec l'année courante
-createPieChart(currentYear);
-
-// Ajout d'un bouton "Next" pour passer à l'année suivante
-d3.select("body")
-  .append("button")
-  .text("Next")
-  .attr("class", "next-button")
-  .on("click", function () {
-    currentYear++;
-    if (currentYear > 2019) {
-      currentYear = 1990;
-    }
-    createPieChart(currentYear);
-    d3.select("svg").remove(); // Suppression du cercle de répartition précédent
-    d3.select(".tooltip").remove();
-  });
-
-  
+// Appel initial de la fonction pour créer la jauge pour l'année courante
+createBarChart(currentYear);
