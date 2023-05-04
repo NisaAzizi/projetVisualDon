@@ -112,7 +112,9 @@ figure
 
 figure
 .append("g")
-.call(axisLeft(valDommagesScale));
+.call(axisLeft(valDommagesScale))
+.selectAll("text")
+.style("font-size", "8px");
 
 figure
   .append("text")
