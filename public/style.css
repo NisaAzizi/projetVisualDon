@@ -135,3 +135,19 @@ margin: auto;
   height: 3px !important;
   width: auto;
 }
+
+.textHumain, .textFoudre{
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+}
+
+.textFoudre, .textHumain{
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;  
+}
