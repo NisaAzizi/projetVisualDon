@@ -82,19 +82,27 @@ body {
 .active, .active:hover { 
   fill: hsl(36, 100%, 70%) !important;
 }		
-#provinceInfo { 
-  position: absolute;
-  top: 0; right: 0;
-  width: 25%;
-  background: rgba(0,0,0,0.1);
+#provinceInfo {
+  display: inline;
+  width: 100%;
+  background: rgba(224, 224, 224, 0.1);
   pointer-events: none;
   opacity: 0;
   transition: 1s; 
 }
 
-    #map {
-      width: 70%;
-    }
+#myDiv {
+  display: flex;
+}
+
+#CA-MAP{
+
+}
+  
+
+#map {
+   width: 70%; 
+  }
 
 @media all and (max-width: 800px) {
   #provinceInfo { width: 40%; }

@@ -83,7 +83,7 @@ const margin = { top: 50, right: 40, bottom: 40, left: 40 };
 
 
 // Create container
-const container = select("body").append("div").attr("id", "animation")
+const container = select("#bubbleChart")
 
 const figure = container
   .append("svg")
@@ -133,9 +133,9 @@ figure
   .attr("transform", "rotate(-90)")
   .text("valDommages");
 
-d3.select("body").append("button").text("play").attr("id", "play");
+d3.select("#bubbleChart").append("button").text("play").attr("id", "play");
 
-d3.select("body").append("button").text("pause").attr("id", "stop");
+d3.select("#bubbleChart").append("button").text("pause").attr("id", "stop");
 
 // Animation
 // variable to store our intervalID
@@ -150,7 +150,7 @@ function animate() {
 
 let i = 0;
 const p = d3
-  .select("body")
+  .select("#bubbleChart")
   .append("p")
   .attr("id", "paragraphe")
   .text(donnesCombinee[i].annee);
