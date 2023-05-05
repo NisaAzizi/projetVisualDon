@@ -202,9 +202,24 @@ let hideEtiquette = function(d) {
     .style("opacity", 0)
 }
 
-const couleurJuridiction = d3.scaleOrdinal()
+/*const couleurJuridiction = d3.scaleOrdinal()
   .domain(data2019.map((d) => d.Juridiction))
-  .range(d3.schemeCategory10);
+  .range(d3.schemeCategory10);*/
+
+  const couleurJuridiction = d3.scaleOrdinal()
+  .domain([0,11])
+  .range(["#FFE3B5",
+  "#FFD9A5",
+  "#FFCE96",
+  "#FFC486",
+  "#FFB976",
+  "#FFAE67",
+  "#FFA357",
+  "#6F70D9",
+  "#81E6FC",
+  "#86A4F0",
+  "#A4CFF3"]);
+
 
 
 function updateChart(data_iteration) {

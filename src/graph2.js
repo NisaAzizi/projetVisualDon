@@ -124,7 +124,7 @@ function colorPoints(numberOfPoints, nbre_de_svg, referentiel) {
         })
         .attr("r", 1.5)
         .style("fill", function (d) {
-          return d3.hsl(36, 1, 0.7);
+          return d3.hsl(0, 0, 0.26);
         });
     }
 
@@ -182,7 +182,7 @@ function createSVGs(nbre_de_svg, features, projection) {
       })
       .attr("r", 1.5)
       .style("fill", function (d) {
-        return d3.hsl(36, 1, 0.7);
+        return d3.hsl(0, 0, 0.26);
       });
   }
 }
