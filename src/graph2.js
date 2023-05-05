@@ -1,7 +1,7 @@
 import DataGraph2 from "../data/graph2_Tortal_SuperficieBrulees_par_provinces_1990-2019.json";
 import * as d3 from "d3";
 
-const svgIds = ["svg1", "svg2", "svg3"];
+//import geneve from "../data/geneve_points.geojson";
 
 const margin = { top: 10, right: 20, bottom: 30, left: 20 },
   width = 300 - margin.left - margin.right,
@@ -36,42 +36,46 @@ canadamap.addEventListener("click", function (e) {
         //Calcul du nombre de points à colorier
         let nbrePointsAColorier, pourcentageEnDessousDe100;
         //FAIRE ELSIF
+        let CentPourcentSelonRefentiels = 1943;
+        if(referentiel == "du Canton de Genève"){
+          CentPourcentSelonRefentiels = 965;
+        }
 
         console.log(dataDeJuridiction + " %");
         if (dataDeJuridiction >= 1 && dataDeJuridiction <= 100) {
           //affiche que suisse %
-          nbrePointsAColorier = Math.round((1943 * dataDeJuridiction) / 100);
+          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * dataDeJuridiction) / 100);
           insertHtml(dataDeJuridiction, referentiel, provinceName);
-          colorPoints(nbrePointsAColorier);
+          colorPoints(nbrePointsAColorier,0,referentiel);
         } else if (dataDeJuridiction >= 101 && dataDeJuridiction <= 200) {
           //affiche 1 suisse entière & %
           pourcentageEnDessousDe100 = dataDeJuridiction - 100;
-          nbrePointsAColorier = Math.round( (1943 * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round( (CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
           console.log(nbrePointsAColorier);
           insertHtml(dataDeJuridiction, referentiel, provinceName);
-          colorPoints(1947, 1);
-          colorPoints(nbrePointsAColorier);
+          colorPoints(CentPourcentSelonRefentiels, 1, referentiel);
+          colorPoints(nbrePointsAColorier, 0, referentiel);
         } else if (dataDeJuridiction >= 201 && dataDeJuridiction <= 300) {
           //affiche 2x et %
           pourcentageEnDessousDe100 = dataDeJuridiction - 200;
-          nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
           insertHtml(dataDeJuridiction, referentiel, provinceName);
-          colorPoints(1947, 2);
-          colorPoints(nbrePointsAColorier);
+          colorPoints(CentPourcentSelonRefentiels, 2, referentiel);
+          colorPoints(nbrePointsAColorier, 0, referentiel);
         } else if (dataDeJuridiction >= 301 && dataDeJuridiction <= 400) {
           //affiche 3x et %
           pourcentageEnDessousDe100 = dataDeJuridiction - 300;
-          nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
           insertHtml(dataDeJuridiction, referentiel, provinceName);
-          colorPoints(1947, 3);
-          colorPoints(nbrePointsAColorier);
+          colorPoints(CentPourcentSelonRefentiels, 3, referentiel);
+          colorPoints(nbrePointsAColorier, 0, referentiel);
         } else if (dataDeJuridiction >= 401 && dataDeJuridiction <= 500) {
           //affiche 4x et
           pourcentageEnDessousDe100 = dataDeJuridiction - 400;
-          nbrePointsAColorier = Math.round((1943 * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
           insertHtml(dataDeJuridiction, referentiel, provinceName);
-          colorPoints(1947, 4);
-          colorPoints(nbrePointsAColorier);
+          colorPoints(CentPourcentSelonRefentiels, 4, referentiel);
+          colorPoints(nbrePointsAColorier,0, referentiel);
         }
       } else if (provinceName == "Nunavut") {
         dataDeJuridiction = 0;
@@ -86,13 +90,19 @@ canadamap.addEventListener("click", function (e) {
   //console.log(dataDeJuridiction);
 });
 
-function colorPoints(numberOfPoints, nbre_de_svg) {
-  d3.json("../data/switzerland_points.geojson").then(function (data) {
+function colorPoints(numberOfPoints, nbre_de_svg, referentiel) {
+  let geojsonACharger = "../data/switzerland_points.geojson";
+  if(referentiel == "du Canton de Genève"){
+    geojsonACharger = "../data/geneve_points.geojson";
+  }
+  d3.json(geojsonACharger).then(function (data) {
+    let t = countPoints(data)
+    console.log(t)
     let projection = d3.geoMercator().fitSize([width, height], data);
     let features = data.features.slice(0, numberOfPoints);
 
     //calcul du  %
-    if (numberOfPoints != 1947) {
+    if (numberOfPoints != 1943) {
       const monSvg = d3
         .select("#myDiv")
         .append("svg")
