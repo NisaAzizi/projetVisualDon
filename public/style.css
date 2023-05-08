@@ -32,6 +32,20 @@ h2{
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
+.texts h2{
+    font-size: 50px;
+    text-align: left;
+}
+
+.texts p{
+  text-align: left !important;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+  width: 50%;
+
+}
+
 .textYear{
   font-family: 'Open Sans', sans-serif;
     font-size: 30px;
@@ -218,6 +232,7 @@ margin: auto;
   overflow-y: scroll !important;
 }
 
+
 body{
   text-align: center;
 }
@@ -243,7 +258,7 @@ button:hover{
 }
 
 #stop{
-  background-color: #a4cff3;
+  background-color: #a4cff3 !important;
   margin-inline: 20px;
   display: inline-block;
 }

@@ -1,14 +1,4 @@
 import * as d3 from "d3";
-import { select, selectAll } from "d3-selection";
-import { scaleSqrt, scaleLinear, scalePow } from "d3-scale";
-import { max, min } from "d3-array";
-import { axisLeft, axisBottom } from "d3-axis";
-import { geoMercator, geoPath } from "d3-geo";
-import { json } from "d3-fetch";
-import { transition } from "d3-transition";
-import { easeLinear } from "d3-ease";
-
-import graphe1 from "../data/graph1_FoudreVsHuman.json";
 
 // Importation des données depuis un autre fichier JavaScript
 import data from "../data/graph1_FoudreVsHuman.json";
@@ -167,13 +157,30 @@ selectYear
   .text((d) => d.Annee)
   .property("selected", (d) => d.Annee === currentYear);
 
-//stop the animation when we select a year and change the button to play
+/* let isDropdownOpen = false;
+
+selectYear.on("click", function () {
+  if (!isDropdownOpen) {
+    isPlaying = false;
+    clearInterval(intervalId);
+    buttonPause.text("Play");
+    console.log("hi");
+    buttonPause.attr("id", "stop");
+  }
+}); */
+
 selectYear.on("click", function () {
   isPlaying = false;
   clearInterval(intervalId);
   buttonPause.text("Play");
+  console.log("hi");
+  buttonPause.attr("id", "stop");
 });
 
+/* selectYear.on("change", function () {
+  console.log("hi");
+  buttonPause.attr("id", "stop");
+}); */
 // Variable to hold the setInterval function
 let intervalId;
 
@@ -226,15 +233,18 @@ const buttonPause = d3
   .select("#barGraph")
   .append("button")
   .text("Pause")
+  .attr("id", "notStop")
   .attr("class", "pause-button")
   .on("click", function () {
     if (isPlaying) {
       clearInterval(intervalId);
       fadeRectangles(currentYear, false);
       buttonPause.text("Play");
+      buttonPause.attr("id", "stop");
     } else {
       startAnimation();
       buttonPause.text("Pause");
+      buttonPause.attr("id", "notStop");
     }
     isPlaying = !isPlaying;
   });
