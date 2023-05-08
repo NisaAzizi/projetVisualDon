@@ -37,20 +37,24 @@ canadamap.addEventListener("click", function (e) {
         let nbrePointsAColorier, pourcentageEnDessousDe100;
         //FAIRE ELSIF
         let CentPourcentSelonRefentiels = 1943;
-        if(referentiel == "du Canton de Genève"){
+        if (referentiel == "du Canton de Genève") {
           CentPourcentSelonRefentiels = 965;
         }
 
         console.log(dataDeJuridiction + " %");
         if (dataDeJuridiction >= 1 && dataDeJuridiction <= 100) {
           //affiche que suisse %
-          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * dataDeJuridiction) / 100);
+          nbrePointsAColorier = Math.round(
+            (CentPourcentSelonRefentiels * dataDeJuridiction) / 100
+          );
           insertHtml(dataDeJuridiction, referentiel, provinceName);
-          colorPoints(nbrePointsAColorier,0,referentiel);
+          colorPoints(nbrePointsAColorier, 0, referentiel);
         } else if (dataDeJuridiction >= 101 && dataDeJuridiction <= 200) {
           //affiche 1 suisse entière & %
           pourcentageEnDessousDe100 = dataDeJuridiction - 100;
-          nbrePointsAColorier = Math.round( (CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round(
+            (CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100
+          );
           console.log(nbrePointsAColorier);
           insertHtml(dataDeJuridiction, referentiel, provinceName);
           colorPoints(CentPourcentSelonRefentiels, 1, referentiel);
@@ -58,30 +62,35 @@ canadamap.addEventListener("click", function (e) {
         } else if (dataDeJuridiction >= 201 && dataDeJuridiction <= 300) {
           //affiche 2x et %
           pourcentageEnDessousDe100 = dataDeJuridiction - 200;
-          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round(
+            (CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100
+          );
           insertHtml(dataDeJuridiction, referentiel, provinceName);
           colorPoints(CentPourcentSelonRefentiels, 2, referentiel);
           colorPoints(nbrePointsAColorier, 0, referentiel);
         } else if (dataDeJuridiction >= 301 && dataDeJuridiction <= 400) {
           //affiche 3x et %
           pourcentageEnDessousDe100 = dataDeJuridiction - 300;
-          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round(
+            (CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100
+          );
           insertHtml(dataDeJuridiction, referentiel, provinceName);
           colorPoints(CentPourcentSelonRefentiels, 3, referentiel);
           colorPoints(nbrePointsAColorier, 0, referentiel);
         } else if (dataDeJuridiction >= 401 && dataDeJuridiction <= 500) {
           //affiche 4x et
           pourcentageEnDessousDe100 = dataDeJuridiction - 400;
-          nbrePointsAColorier = Math.round((CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100);
+          nbrePointsAColorier = Math.round(
+            (CentPourcentSelonRefentiels * pourcentageEnDessousDe100) / 100
+          );
           insertHtml(dataDeJuridiction, referentiel, provinceName);
           colorPoints(CentPourcentSelonRefentiels, 4, referentiel);
-          colorPoints(nbrePointsAColorier,0, referentiel);
+          colorPoints(nbrePointsAColorier, 0, referentiel);
         }
       } else if (provinceName == "Nunavut") {
         dataDeJuridiction = 0;
         referentiel = "de la Suisse";
         insertHtml(dataDeJuridiction, referentiel, provinceName);
-        
       }
     }
 
@@ -92,12 +101,12 @@ canadamap.addEventListener("click", function (e) {
 
 function colorPoints(numberOfPoints, nbre_de_svg, referentiel) {
   let geojsonACharger = "../data/switzerland_points.geojson";
-  if(referentiel == "du Canton de Genève"){
+  if (referentiel == "du Canton de Genève") {
     geojsonACharger = "../data/geneve_points.geojson";
   }
   d3.json(geojsonACharger).then(function (data) {
-    let t = countPoints(data)
-    console.log(t)
+    let t = countPoints(data);
+    console.log(t);
     let projection = d3.geoMercator().fitSize([width, height], data);
     let features = data.features.slice(0, numberOfPoints);
 
@@ -186,4 +195,3 @@ function createSVGs(nbre_de_svg, features, projection) {
       });
   }
 }
-

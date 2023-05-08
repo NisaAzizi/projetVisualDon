@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
-
     <script type="module" src="/src/graph3v2.js"></script>
+    <script type="module" src="/src/graph1v3.js"></script> 
     <script type="module" src="/src/graph2.js"></script>
     <!--Ne pas oublier de changer les select Body à barGraph-->
-    <!-- <script type="module" src="/src/graph1v3.js"></script> -->
 
     <title>Projet</title>
   </head>
   <body>
-    <h1>Les incendies de forêt au Canada entre 1990 et 2019</h1>
-    <h2>Activité Humaine vs Foudre</h2>
+    <div id="titrePrincipal"><h1>Les incendies de forêt au Canada entre 1990 et 2019</h1>
+    <img src="img/feuDrapeau.svg" alt="feu" id="feuDrapeau" width="300px"/></div>
+    <h2>Comparaison des dégâts causés par l'Homme et par la foudre</h2>
     <div id="barGraph"></div>
-    <div id="bubbleChart"></div>
+    <div id="bubbleChart" style="margin-bottom: 25px;"></div>
     <div id="CA-MAP">
       <div id="map">
         <svg

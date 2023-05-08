@@ -8,8 +8,6 @@ import { json } from "d3-fetch";
 import { transition } from "d3-transition";
 import { easeLinear } from "d3-ease";
 
-
-
 import graph3Incendie from "../data/graph3_Nombres_incendies_par_provinces_et_années.json";
 import graph3Superficie from "../data/graph3_Superficie_provinces.json";
 import graph3Dommages from "../data/graph3_Valeur_dommages_par_pronvince_et_années.json";
@@ -17,7 +15,6 @@ import graph3Dommages from "../data/graph3_Valeur_dommages_par_pronvince_et_ann�
 // Dimensions du graphique
 const width = 800;
 const height = 300;
-
 
 const annees = Object.keys(graph3Dommages[0]);
 
@@ -79,11 +76,10 @@ const data2019 = donnesCombinee
   .filter((d) => d.annee == 2019)
   .map((d) => d.data)[0];
 
-const margin = { top: 50, right: 40, bottom: 40, left: 40 };
-
+const margin = { top: 50, right: 40, bottom: 80, left: 80 };
 
 // Create container
-const container = select("#bubbleChart")
+const container = select("#bubbleChart");
 
 const figure = container
   .append("svg")
@@ -111,42 +107,27 @@ figure
   .call(axisBottom(nbrIncendiesScale));
 
 figure
-.append("g")
-.call(axisLeft(valDommagesScale))
-.selectAll("text")
-.style("font-size", "8px");
+  .append("g")
+  .call(axisLeft(valDommagesScale))
+  .selectAll("text")
+  .style("font-size", "8px");
 
 figure
   .append("text")
-  .attr("class", "x label")
+  .attr("class", "x-label")
   .attr("text-anchor", "end")
   .attr("x", width)
-  .attr("y", height - 6)
-  .text("nbrIncendies");
+  .attr("y", height + 70)
+  .text("Nombre d'incendies");
 
 figure
   .append("text")
-  .attr("class", "y label")
+  .attr("class", "y-label")
   .attr("text-anchor", "end")
-  .attr("y", 6)
+  .attr("y", -70)
   .attr("dy", ".75em")
   .attr("transform", "rotate(-90)")
-  .text("valDommages");
-
-d3.select("#bubbleChart").append("button").text("play").attr("id", "play");
-
-d3.select("#bubbleChart").append("button").text("pause").attr("id", "stop");
-
-// Animation
-// variable to store our intervalID
-let nIntervId;
-
-function animate() {
-  // check if already an interval has been set up
-  if (!nIntervId) {
-    nIntervId = setInterval(play, 100);
-  }
-}
+  .text("Valeur des dommages en dollars");
 
 let i = 0;
 const p = d3
@@ -166,6 +147,21 @@ function play() {
   updateChart(donnesCombinee[i].data);
 }
 
+d3.select("#bubbleChart").append("button").text("Play").attr("id", "play");
+
+d3.select("#bubbleChart").append("button").text("Pause").attr("id", "stop");
+
+// Animation
+// variable to store our intervalID
+let nIntervId;
+
+function animate() {
+  // check if already an interval has been set up
+  if (!nIntervId) {
+    nIntervId = setInterval(play, 100);
+  }
+}
+
 function stop() {
   clearInterval(nIntervId);
   // release our intervalID from the variable
@@ -174,53 +170,59 @@ function stop() {
 
 // Avant le tooltip était dans le svg
 let etiquette = container
-.append("div")
+  .append("div")
   .style("opacity", 0)
   .attr("class", "tooltip")
   .style("background-color", "black")
   .style("border-radius", "5px")
   .style("padding", "10px")
-  .style("color", "white")
+  .style("color", "white");
 
-let showEtiquette = function(event, d) {
-  console.log(d)
-  etiquette
-    .transition()
-    .duration(200)
+let showEtiquette = function (event, d) {
+  console.log(d);
+  etiquette.transition().duration(200);
 
   etiquette
     .style("opacity", 1)
-    .html(`Dommage: ` + d.Dommage + `$<br> nombre d'incendies:` + d.Incendie + `<br>` + d.Juridiction+' ' + d.Superficie + ' km²')
-    .style("left", (event.layerX+ 10+"px"))
-    .style("top", (event.layerY +10+"px"))
-}
+    .html(
+      `Dommage: ` +
+        d.Dommage +
+        `$<br> nombre d'incendies:` +
+        d.Incendie +
+        `<br>` +
+        d.Juridiction +
+        " " +
+        d.Superficie +
+        " km²"
+    )
+    .style("left", event.layerX + 10 + "px")
+    .style("top", event.layerY + 10 + "px");
+};
 
-let hideEtiquette = function(d) {
-  etiquette
-    .transition()
-    .duration(200)
-    .style("opacity", 0)
-}
+let hideEtiquette = function (d) {
+  etiquette.transition().duration(200).style("opacity", 0);
+};
 
 /*const couleurJuridiction = d3.scaleOrdinal()
   .domain(data2019.map((d) => d.Juridiction))
   .range(d3.schemeCategory10);*/
 
-  const couleurJuridiction = d3.scaleOrdinal()
-  .domain([0,11])
-  .range(["#FFE3B5",
-  "#FFD9A5",
-  "#FFCE96",
-  "#FFC486",
-  "#FFB976",
-  "#FFAE67",
-  "#FFA357",
-  "#6F70D9",
-  "#81E6FC",
-  "#86A4F0",
-  "#A4CFF3"]);
-
-
+const couleurJuridiction = d3
+  .scaleOrdinal()
+  .domain([0, 11])
+  .range([
+    "#FFE3B5",
+    "#FFD9A5",
+    "#FFCE96",
+    "#FFC486",
+    "#FFB976",
+    "#FFAE67",
+    "#FFA357",
+    "#6F70D9",
+    "#81E6FC",
+    "#86A4F0",
+    "#A4CFF3",
+  ]);
 
 function updateChart(data_iteration) {
   figure
@@ -237,26 +239,20 @@ function updateChart(data_iteration) {
           .transition(transition().duration(500).ease(easeLinear))
           .attr("r", (d) => superficieProvincesScale(d.Superficie))
           .attr("fill", (d) => couleurJuridiction(d.Juridiction))
-          .style("opacity", 0.1)
+          .style("opacity", 0.1),
 
-         ,
       (update) =>
         update
           .transition(transition().duration(500).ease(easeLinear))
           .attr("cx", (d) => nbrIncendiesScale(d.Incendie))
           .attr("cy", (d) => valDommagesScale(d.Dommage))
           .attr("r", (d) => superficieProvincesScale(d.Superficie)),
-  
-      (exit) => exit.remove(),
+
+      (exit) => exit.remove()
     )
-      .on("mouseover", showEtiquette)
-     .on("mouseleave", hideEtiquette )
-
-
-    
-
+    .on("mouseover", showEtiquette)
+    .on("mouseleave", hideEtiquette);
 }
 
 document.getElementById("play").addEventListener("click", animate);
 document.getElementById("stop").addEventListener("click", stop);
-

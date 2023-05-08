@@ -14,13 +14,18 @@ import graphe1 from "../data/graph1_FoudreVsHuman.json";
 import data from "../data/graph1_FoudreVsHuman.json";
 
 let currentYear = 1990;
+// Create a div to hold textYear and selectYear
+const header = d3.select("body").append("div").attr("class", "header");
 
-//afficher currentYear
+// Display current year
+const textYear = header.append("p").text(currentYear).attr("class", "textYear");
+
+/* //afficher currentYear
 const textYear = d3
   .select("body")
   .append("p")
   .text(currentYear)
-  .attr("class", "textYear");
+  .attr("class", "textYear"); */
 
 // Créer un élément SVG dans le corps du document
 var svg = d3
@@ -75,16 +80,16 @@ function createRectangle(year) {
       svg
         .append("text")
         .attr("class", "textHumain")
-        .attr("x", 430)
+        .attr("x", 270)
         .attr("y", 200)
         .attr("position", "center")
         .attr("fill", "black")
         .text(
-          `${humainPercentage}% soit ${filteredData[0]["Total Humain"]}km2`
+          `${humainPercentage}% des dégâts sont d'origine humaine soit ${filteredData[0]["Total Humain"]}km2`
         );
       svg
         .append("rect")
-        .attr("x", 410)
+        .attr("x", 250)
         .attr("y", 190)
         .attr("class", "square")
         .attr("width", 10)
@@ -99,16 +104,18 @@ function createRectangle(year) {
     .on("mouseover", function () {
       svg
         .append("text")
-        .attr("x", 430)
+        .attr("x", 270)
         .attr("y", 200)
         .attr("class", "textFoudre")
         .attr("fill", "black")
         .attr("position", "center")
-        .text(`${foudrePercentage}% soit ${filteredData[0]["Total Foudre"]}km2`)
+        .text(
+          `${foudrePercentage}% des dégâts ont été causés par la foudre soit ${filteredData[0]["Total Foudre"]}km2`
+        )
         .append("square");
       svg
         .append("rect")
-        .attr("x", 410)
+        .attr("x", 250)
         .attr("y", 190)
         .attr("class", "square")
         .attr("width", 10)
@@ -123,7 +130,7 @@ function createRectangle(year) {
 
 //un bouton next qui permet de changer l'année courante et d'afficher cette année
 createRectangle(currentYear);
-const buttonNext = d3
+/* const buttonNext = d3
   .select("body")
   .append("button")
   .text("Next")
@@ -137,11 +144,10 @@ const buttonNext = d3
     textYear.text(currentYear);
     svg.selectAll(".rectHumain").remove();
     createRectangle(currentYear);
-  });
+  }); */
 
 // Create a dropdown menu for selecting the year
-const selectYear = d3
-  .select("body")
+const selectYear = header
   .append("select")
   .attr("class", "select-year")
   .on("change", function () {
@@ -151,42 +157,100 @@ const selectYear = d3
     createRectangle(currentYear);
   });
 
-// Populate the dropdown menu with options for each year in the dataset
-const years = data.map((d) => d.Annee);
+// Populate the dropdown menu with options for each year in the dataset and make the current year selected and when we select a year, the animation stops
 selectYear
   .selectAll("option")
-  .data(years)
+  .data(data)
   .enter()
   .append("option")
-  .attr("value", (d) => d)
-  .text((d) => d);
+  .attr("value", (d) => d.Annee)
+  .text((d) => d.Annee)
+  .property("selected", (d) => d.Annee === currentYear);
+
+//stop the animation when we select a year and change the button to play
+selectYear.on("click", function () {
+  isPlaying = false;
+  clearInterval(intervalId);
+  buttonPause.text("Play");
+});
+
+// Variable to hold the setInterval function
+let intervalId;
+
+// Variable to keep track of animation state
+let isPlaying = true;
 
 // Function to fade out the current rectangle and fade in the new one
-function fadeRectangles(year) {
-  svg
-    .selectAll(".rectHumain")
-    .transition()
-    .duration(500)
-    .attr("opacity", 0)
-    .remove();
+function fadeRectangles(year, isPlaying) {
+  if (isPlaying) {
+    svg
+      .selectAll(".rectHumain")
+      .transition()
+      .duration(500)
+      .attr("opacity", 0)
+      .remove();
 
-  createRectangle(year);
+    createRectangle(year);
 
-  svg
-    .selectAll(".rectHumain")
-    .attr("opacity", 0)
-    .transition()
-    .duration(500)
-    .attr("opacity", 1);
+    svg
+      .selectAll(".rectHumain")
+      .attr("opacity", 0)
+      .transition()
+      .duration(500)
+      .attr("opacity", 1);
+  }
 }
 
-// Change the year every 5 seconds with a fade effect
-setInterval(() => {
-  if (currentYear >= 2018) {
-    currentYear = 1990;
-  } else {
-    currentYear++;
-  }
-  textYear.text(currentYear);
-  fadeRectangles(currentYear);
-}, 5000);
+// Function to start the animation
+function startAnimation() {
+  intervalId = setInterval(() => {
+    if (currentYear >= 2018) {
+      currentYear = 1990;
+    } else {
+      currentYear++;
+    }
+    textYear.text(currentYear);
+    svg.selectAll(".rectHumain").remove();
+    svg.selectAll(".textHumain").remove();
+    svg.selectAll(".textFoudre").remove();
+    svg.selectAll(".square").remove();
+    fadeRectangles(currentYear, isPlaying);
+  }, 5000);
+}
+
+// Start the animation
+startAnimation();
+
+// Add a pause button that stops the setInterval function and stops the rectangles from changing
+const buttonPause = d3
+  .select("body")
+  .append("button")
+  .text("Pause")
+  .attr("class", "pause-button")
+  .on("click", function () {
+    if (isPlaying) {
+      clearInterval(intervalId);
+      fadeRectangles(currentYear, false);
+      buttonPause.text("Play");
+    } else {
+      startAnimation();
+      buttonPause.text("Pause");
+    }
+    isPlaying = !isPlaying;
+  });
+
+// Add CSS styling to display header elements in a row
+header
+  .style("display", "flex")
+  .style("align-items", "center")
+  .style("margin", "20px")
+  .style("justify-content", "center");
+
+/* const years = data.map((d) => d.Annee);
+  selectYear
+    .selectAll("option")
+    .data(years)
+    .enter()
+    .append("option")
+    .attr("value", (d) => d)
+    .text((d) => d); */

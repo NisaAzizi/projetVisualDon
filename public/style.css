@@ -1,15 +1,33 @@
-h1{
-    font-family: 'Open Sans', sans-serif;
-    font-size: 50px;
-    text-align: center;
-    margin-top:250px;
-    margin-bottom: 250px;
+
+#titrePrincipal{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95vw;
+  height: 100vh;
 }
+
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  width: 60%;
+  height: 50%;
+  font-size: 100px;
+  text-align: left;
+}
+
+#feuDrapeau {
+  width: 35%;
+  float: right;
+  height: 75vh;
+  margin-top: 50px;
+}
+
 
 h2{
     font-family: 'Open Sans', sans-serif;
     font-size: 30px;
     text-align: center;
+    margin: 0 auto;
     margin-top: 50px;
     margin-bottom: 50px;
 }
@@ -42,7 +60,6 @@ h2{
     border-radius: 8px;
     font-family: 'Open Sans', sans-serif;
     padding-inline: 25px;
-    display: block;
     margin: 0 auto;
 }
 
@@ -162,10 +179,84 @@ margin: auto;
   font-size: 20px;
 }
 
-.textFoudre, .textHumain{
-  display: flex;
-  text-align: center;
+.textYear{
   font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+
+/* Styles for the select element */
+/* cacher le bord et le fond de la liste déroulante */
+.select-year {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'%3E%3Cpath fill='%23000' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center right !important;
+  border: none !important;
+  padding-right: 1em !important;
+  padding-left: 1em !important;
+  font-size: 1em !important;
+  font-family: sans-serif !important;
+  color: #000 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  overflow-y: scroll !important;
+  width: 5px !important;
+  size: auto;
+}
+
+.select-year option {
+  font-size: 14px !important;
+  font-weight: normal !important;
+  font: inherit !important;
+  border-radius: 4px !important;
+  font-size: 20px !important;
+  overflow-y: scroll !important;
+}
+
+body{
   text-align: center;
-  font-size: 20px;  
+}
+
+button {
+  background-color: #ffe3b5;
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 5px;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 100;
+  margin: 0px;
+  display: inline-block;
+}
+
+button:hover{
+  border: 1px solid #000 !important;
+  cursor: pointer;
+}
+
+#stop{
+  background-color: #a4cff3;
+  margin-inline: 20px;
+  display: inline-block;
+}
+
+.x-label, .y-label{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+}
+
+
+#bubbleChart p{
+  font-size: 30px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold !important;
+  font-weight: 100;
+  text-align: center;
 }

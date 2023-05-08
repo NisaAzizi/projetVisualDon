@@ -119,9 +119,9 @@ figure
   .attr("transform", "rotate(-90)")
   .text("valDommages");
 
-d3.select("body").append("button").text("play").attr("id", "play");
+d3.select("body").append("button").text("Play").attr("id", "play");
 
-d3.select("body").append("button").text("pause").attr("id", "stop");
+d3.select("body").append("button").text("Pause").attr("id", "stop");
 
 // Animation
 // variable to store our intervalID
@@ -130,7 +130,7 @@ let nIntervId;
 function animate() {
   // check if already an interval has been set up
   if (!nIntervId) {
-    nIntervId = setInterval(play, 100);
+    nIntervId = setInterval(play, 1000);
   }
 }
 
