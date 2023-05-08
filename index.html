@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" type="image/x-icon" href="../img/fire-torch.ico">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
@@ -9,22 +10,29 @@
     <script type="module" src="/src/graph2.js"></script>
     <!--Ne pas oublier de changer les select Body à barGraph-->
 
-    <title>Projet</title>
+    <title>Incendies au Canada</title>
   </head>
   <body>
     <div id="titrePrincipal"><h1>Les incendies de forêt au Canada entre 1990 et 2019</h1>
     <img src="img/feuDrapeau.svg" alt="feu" id="feuDrapeau" width="300px"/></div>
     <div id="texte1" class="texts">
+        <p class="redTexts">Tout d'abord</p>
         <h2>Le Canada et ses forêts</h2>
         <p>
             Le Canada est connu pour ses forêts qui couvrent environ 40% de son territoire. 
             Ces forêts abritent une grande diversité au niveau de la faune et la flore, certaines étant uniques au Canada. 
             Elles jouent également un rôle crucial dans la lutte contre le changement climatique en absorbant le dioxyde de carbone.
+            <br><br>
+            Cependant, les forêts canadiennes font également face à des défis importants, tels que la déforestation, la fragmentation des habitats, 
+            la surutilisation et la perturbation par l'activité humaine. Ces menaces ont un impact sur 
+            la biodiversité des forêts, sur leur capacité à stocker du carbone et sur les avantages économiques qu'elles fournissent.
         </p>
     </div>
     <h2>Comparaison des dégâts causés par l'Homme et par la foudre</h2>
     <div id="barGraph"></div>
+    <h2> Lien entre le nombre d’incendies et la valeur des dommages <br>causés dans chaque province et territoire</h2>
     <div id="bubbleChart" style="margin-bottom: 25px;"></div>
+    <h2>Superficie brûlée en 2019 dans chaque province/territoire <br>comparée avec la superficie Suisse/Genevoise</h2>
     <div id="CA-MAP">
       <div id="map">
         <svg
@@ -393,4 +401,10 @@
       <div id="provinceInfo"></div>
     </div>
   </body>
+  <footer>
+    <p>
+        Données : <a href="http://nfdp.ccfm.org/fr/index.php">La base de donnée nationale sur les forêts du Canada</a>
+      </p>
+      <img src="img/feuDrapeauBlanc.svg" alt="feu" id="feuDrapeauFooter" width="50px" fill="white"/></img>
+  </footer>
 </html>

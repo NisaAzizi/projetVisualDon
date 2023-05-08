@@ -76,7 +76,7 @@ const data2019 = donnesCombinee
   .filter((d) => d.annee == 2019)
   .map((d) => d.data)[0];
 
-const margin = { top: 50, right: 40, bottom: 80, left: 80 };
+const margin = { top: 50, right: 40, bottom: 80, left: 120 };
 
 // Create container
 const container = select("#bubbleChart");
@@ -124,7 +124,7 @@ figure
   .append("text")
   .attr("class", "y-label")
   .attr("text-anchor", "end")
-  .attr("y", -70)
+  .attr("y", -100)
   .attr("dy", ".75em")
   .attr("transform", "rotate(-90)")
   .text("Valeur des dommages en dollars");

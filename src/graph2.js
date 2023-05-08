@@ -148,10 +148,10 @@ function insertHtml(dataDeJuridiction, referentiel, provinceName) {
   provinceInfo.innerHTML = "";
   provinceInfo.insertAdjacentHTML(
     "afterbegin",
-    "<div id='myDiv'></div><h1>" +
+    "<h1>" +
       provinceName +
       `</h1><p> La superficie brûlée en juridiction ${provinceName} entre 
-      1990 et 2019 représente <b> ${dataDeJuridiction} % <b> de la superficie ${referentiel} </p>`
+    1990 et 2019 représente <p class="pourcentageGras"><b> ${dataDeJuridiction} % </b></p><p> de la superficie ${referentiel} </p><div id='myDiv'></div>`
   );
 }
 
