@@ -15,7 +15,7 @@ import data from "../data/graph1_FoudreVsHuman.json";
 
 let currentYear = 1990;
 // Create a div to hold textYear and selectYear
-const header = d3.select("body").append("div").attr("class", "header");
+const header = d3.select("#barGraph").append("div").attr("class", "header");
 
 // Display current year
 const textYear = header.append("p").text(currentYear).attr("class", "textYear");
@@ -29,7 +29,7 @@ const textYear = d3
 
 // Créer un élément SVG dans le corps du document
 var svg = d3
-  .select("body")
+  .select("#barGraph")
   .append("svg")
   .attr("width", 1000)
   .attr("height", 250);
@@ -223,7 +223,7 @@ startAnimation();
 
 // Add a pause button that stops the setInterval function and stops the rectangles from changing
 const buttonPause = d3
-  .select("body")
+  .select("#barGraph")
   .append("button")
   .text("Pause")
   .attr("class", "pause-button")
