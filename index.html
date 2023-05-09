@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/x-icon" href="../img/fire-torch.ico">
+    <!-- <script type="module" src="/src/index.js"></script> -->
+    <link rel="icon" type="image/x-icon" href="../img/feuDrapeau.ico">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css" />
@@ -13,6 +14,8 @@
     <title>Incendies au Canada</title>
   </head>
   <body>
+  <!--   <button onclick="topFunction()" id="myBtn" title="Retour en haut de la page">Haut</button> -->
+
     <div id="titrePrincipal"><h1>Les incendies de forêt au Canada entre 1990 et 2019</h1>
     <img src="img/feuDrapeau.svg" alt="feu" id="feuDrapeau" width="300px"/></div>
     <div id="texte1" class="texts">
@@ -23,9 +26,9 @@
             Ces forêts abritent une grande diversité au niveau de la faune et la flore, certaines étant uniques au Canada. 
             Elles jouent également un rôle crucial dans la lutte contre le changement climatique en absorbant le dioxyde de carbone.
             <br><br>
-            Cependant, les forêts canadiennes font également face à des défis importants, tels que la déforestation, la fragmentation des habitats, 
+            Cependant, les forêts canadiennes font également face à des défis importants, tels que la déforestation, 
             la surutilisation et la perturbation par l'activité humaine. Ces menaces ont un impact sur 
-            la biodiversité des forêts, sur leur capacité à stocker du carbone et sur les avantages économiques qu'elles fournissent.
+            la biodiversité, sur la capacité des forêts à stocker du carbone et sur les avantages économiques qu'elles fournissent.
         </p>
     </div>
     <h2>Comparaison des dégâts causés par l'activité humaine et par la foudre</h2>
@@ -34,12 +37,9 @@
         <p class="redTexts">Des dommages collatéraux</p>
         <h2>Le vrai coût des incendies</h2>
         <p>
-            Les incendies de forêt peuvent causer des dommages financiers considérables, tels que la perte de revenus pour les industries locales, 
-            la destruction de biens et l'augmentation des primes d'assurance. Les coûts totaux peuvent varier considérablement, comme en 2017 où 
-            les incendies ont coûté plus de 650 millions de dollars en dommages assurés au Canada. Il est important de prendre des mesures pour prévenir 
-            et gérer les incendies de forêt afin de réduire leur impact financier sur les communautés touchées, notamment en investissant dans des programmes 
-            de prévention, des stratégies de lutte plus efficaces et des mesures de restauration écologique.
-        </p>
+            En plus des dommages environnementaux, les incendies de forêt peuvent avoir des conséquences financières considérables, tels que la
+            perte de revenus pour les industries locales, la destruction de biens et l'augmentation des primes d'assurance. 2017 a été l'année la plus coûteuse où 
+            les incendies ont coûté plus de 650 millions de dollars au total en dommages assurés au Canada. 
     </div>
     <h2> Lien entre le nombre d’incendies et la valeur des dommages <br>causés dans chaque province et territoire</h2>
     <div id="bubbleChart" style="margin-bottom: 25px;"></div>
@@ -47,14 +47,17 @@
         <p class="redTexts">Une menace constante</p>
         <h2>Les incendies depuis 1990</h2>
         <p>
-            Depuis 1990, le Canada a connu une augmentation des incendies de forêt, avec des saisons record en 2017. Les causes incluent les conditions 
-            météorologiques extrêmes et les activités humaines. Les feux ont des conséquences négatives pour l'écosystème, la santé publique et les économies locales. 
-            Le gouvernement canadien a pris des mesures pour réduire leur impact, mais les feux de forêt restent une menace constante.
-            Il est donc essentiel que les mesures de prévention et de gestion des incendies de forêt continuent d'être améliorées pour protéger les forêts et 
+
+            Depuis 1990, le nombre d'incendies au Canada a considérablement augmenté, avec des saisons record en 2017. 
+            Les causes sont liées aux conditions météorologiques extrêmes et aux activités humaines. Les feux ont des conséquences non-négligeables 
+            pour l'écosystème, la santé publique et les économies locales. 
+            Le gouvernement canadien a essayé de prendre des mesures pour réduire l'impact de ces incendies, mais ils restent une menace 
+            constante.
+            Les mesures de prévention et de gestion des incendies de forêt continuent d'être améliorées pour protéger les forêts et 
             les communautés canadiennes à l'avenir.
         </p>
     </div>
-    <h2>Superficie brûlée en 2019 dans chaque province/territoire <br>comparée avec la superficie Suisse/Genevoise</h2>
+    <h2>Superficie brûlée entre 1990 et 2019 dans chaque province/territoire <br>comparée avec la superficie Suisse/Genevoise</h2>
     <div id="CA-MAP">
       <div id="map">
         <svg

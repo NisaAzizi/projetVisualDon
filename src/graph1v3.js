@@ -222,7 +222,7 @@ function startAnimation() {
     svg.selectAll(".textFoudre").remove();
     svg.selectAll(".square").remove();
     fadeRectangles(currentYear, isPlaying);
-  }, 5000);
+  }, 2000);
 }
 
 // Start the animation
