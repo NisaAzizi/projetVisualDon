@@ -26,6 +26,10 @@
   margin-bottom: 150px;
 }
 
+#barGraph{
+  margin-bottom: 0px !important;
+}
+
 .pourcentageGras{
   font-size: 30px !important;
 }
@@ -64,7 +68,6 @@ h2{
   font-size: 28px;
   width: 65%;
   text-align: justify !important;
-    justify-content: left;
 
 }
 
@@ -76,6 +79,11 @@ h2{
   margin-left: 22px;
   margin-right: 22px;
 }
+
+/* #texte2{
+  display: ;
+} */
+
 
 .textYear{
   font-family: 'Open Sans', sans-serif;
@@ -347,6 +355,7 @@ footer p a:hover{
 }
 
 footer{
+  margin-top: 400px;
   display: flex;
   justify-content: space-around;
   height: 150px;

@@ -147,9 +147,50 @@ function play() {
   updateChart(donnesCombinee[i].data);
 }
 
-d3.select("#bubbleChart").append("button").text("Play").attr("id", "play");
+let isPlaying = false;
 
-d3.select("#bubbleChart").append("button").text("Pause").attr("id", "stop");
+const buttonPlay = d3
+  .select("#bubbleChart")
+  .append("button")
+  .text("Play")
+  .attr("id", "stop")
+  .attr("class", "play-button")
+  .on("click", function () {
+    if (isPlaying) {
+      stop();
+      buttonPlay.text("Play");
+      buttonPlay.attr("id", "stop");
+    } else {
+      animate();
+      buttonPlay.text("Pause");
+      buttonPlay.attr("id", "notStop");
+    }
+    isPlaying = !isPlaying;
+  });
+
+/* const buttonPause = d3
+  .select("#barGraph")
+  .append("button")
+  .text("Pause")
+  .attr("id", "notStop")
+  .attr("class", "pause-button")
+  .on("click", function () {
+    if (isPlaying) {
+      clearInterval(intervalId);
+      fadeRectangles(currentYear, false);
+      buttonPause.text("Play");
+      buttonPause.attr("id", "stop");
+    } else {
+      startAnimation();
+      buttonPause.text("Pause");
+      buttonPause.attr("id", "notStop");
+    }
+    isPlaying = !isPlaying;
+  }); */
+
+/* d3.select("#bubbleChart").append("button").text("Play").attr("id", "play");
+
+d3.select("#bubbleChart").append("button").text("Pause").attr("id", "stop"); */
 
 // Animation
 // variable to store our intervalID
@@ -254,5 +295,5 @@ function updateChart(data_iteration) {
     .on("mouseleave", hideEtiquette);
 }
 
-document.getElementById("play").addEventListener("click", animate);
-document.getElementById("stop").addEventListener("click", stop);
+/* document.getElementById("play").addEventListener("click", animate);
+document.getElementById("stop").addEventListener("click", stop); */
